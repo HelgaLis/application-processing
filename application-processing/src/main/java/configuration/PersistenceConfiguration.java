@@ -4,16 +4,22 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 @Configuration
-public class HibernateConfiguration {
+public class PersistenceConfiguration {
+	@Bean
+	public HibernateTransactionManager hibernateTransactionalManager(SessionFactory sessionFactory){
+		return new HibernateTransactionManager(sessionFactory);
+	}
 	@Bean
 	public LocalSessionFactoryBean SessionFactory() {
 		LocalSessionFactoryBean localSFBean = new LocalSessionFactoryBean();
