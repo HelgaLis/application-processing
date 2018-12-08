@@ -1,35 +1,40 @@
 package tests;
 
-import javax.transaction.Transactional;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import configuration.PersistenceConfiguration;
-import model.BaseApplication;
+import model.ClaimApplication;
+import model.SignedApplication;
+import repository.ApplicationRepository;
 
 
 public class HibernateConfigurationTest {
 	private static ApplicationContext context;
-	private static SessionFactory sessionFactory;
+	private static ApplicationRepository applicationRepository;
 	static {
 		context = new AnnotationConfigApplicationContext(PersistenceConfiguration.class);
-		sessionFactory = context.getBean(SessionFactory.class);
+		applicationRepository = context.getBean(ApplicationRepository.class);
 	}
 	
 	@Test
-	@Transactional
-	public void test() {
-		System.out.println("Started persistence tests");
-		Session session = sessionFactory.openSession();
-		session.get(BaseApplication.class, 0l);
+	public void saveApplication() {
+		ClaimApplication claimApp = new ClaimApplication();
+		claimApp.setId(100l);
+		claimApp.setTitle("I am first");
+		claimApp.setDescription("You are last all");
+		applicationRepository.saveApplication(claimApp);
+		SignedApplication signedApp = new SignedApplication();
+		signedApp.setId(101l);
+		signedApp.setAuthorName("Roro");
+		applicationRepository.saveApplication(signedApp);
+	}
+	@Test
+	public void getApplication() {
+		System.out.println(applicationRepository.getApplicationById(100l));
+		System.out.println(applicationRepository.getApplicationById(101l));
 	}
 }

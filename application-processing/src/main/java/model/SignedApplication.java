@@ -14,9 +14,20 @@ import lombok.Setter;
 @Table(name="signed_app")
 @PrimaryKeyJoinColumn(name = "signedId")
 public class SignedApplication extends BaseApplication {
-	@Getter
-	@Setter
 	@Column(name="author_name")
 	private String authorName;
+
+	public String getAuthorName() {
+		return authorName;
+	}
+
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString()+" SignedApplication [authorName=" + authorName + "]";
+	}
 	
 }

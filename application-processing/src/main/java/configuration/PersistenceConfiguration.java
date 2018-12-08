@@ -14,9 +14,16 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import repository.ApplicationRepository;
+import repository.ApplicationRepositoryImpl;
+
 @Configuration
 @EnableTransactionManagement
 public class PersistenceConfiguration {
+	@Bean
+	public ApplicationRepository applicationRepository() {
+		return new ApplicationRepositoryImpl(sessionFactory().getObject());
+	}
 	@Bean
 	public PlatformTransactionManager transactionalManager(){
 		HibernateTransactionManager transactionalManager = new HibernateTransactionManager();

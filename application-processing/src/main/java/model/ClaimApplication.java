@@ -15,17 +15,31 @@ import lombok.Setter;
 @Table(name="claim_app")
 @PrimaryKeyJoinColumn(name = "clId")
 public class ClaimApplication extends BaseApplication{
-	/*@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Getter
-	@Setter
-	private int id;*/
-	@Getter
-	@Setter
+
 	@Column(name="title")
 	private String title;
-	@Getter
-	@Setter
+
 	@Column(name="description")
 	private String description;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString()+" ClaimApplication [title=" + title + ", description=" + description + "]";
+	}
 }
